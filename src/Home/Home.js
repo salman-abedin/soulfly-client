@@ -17,7 +17,8 @@ const Home = ({ location }) => {
    const [typingUsers, setTypingUsers] = useState({});
 
    useEffect(() => {
-      socket = socketIOClient('localhost:5000');
+      // socket = socketIOClient('localhost:5000');
+      socket = socketIOClient('https://soulfly.herokuapp.com/');
 
       socket.emit('join', name);
 
