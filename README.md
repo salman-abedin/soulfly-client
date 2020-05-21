@@ -1,2 +1,2 @@
-The client side codebase for [Soulfly](https://github.com/facebook/create-react-app).
+The client side codebase for [Soulfly](https://soulfly.netlify.app/).
 
