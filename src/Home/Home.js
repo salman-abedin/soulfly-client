@@ -21,13 +21,22 @@ const Home = ({ location }) => {
 
       socket.emit('join', name);
 
-      socket.on('init', (usrList, messages) => {
+      socket.on('init-users', (usrList, messages) => {
          setUsers((users) => usrList);
+
          setMessages((oldMessages) => [
-            ...messages,
+            ...oldMessages,
             { class: 'admin', content: `Welcome to the server ${name}` },
          ]);
+
       });
+
+      socket.on('init-messages', messages => {
+         setMessages((oldMessages) => [
+            ...oldMessages,
+            ...messages,
+         ]);
+      })
 
       socket.on('usrJoin', (users, name) => {
          setUsers((oldUsers) => users);
@@ -38,6 +47,7 @@ const Home = ({ location }) => {
       });
 
       socket.on('message', (message) => {
+         setTyping(false)
          setMessages((oldMessages) => [...oldMessages, message]);
          message.id !== socket.id && setSeen(false);
          setSeenUsers((oldSeenUsers) => []);
