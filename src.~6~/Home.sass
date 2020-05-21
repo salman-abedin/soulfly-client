@@ -1,0 +1,74 @@
+@mixin messages($align, $background-color, $color)
+  border: 1px solid black
+  border-radius: 10px
+  padding: 10px
+  margin: 10px 0px
+  align-self: $align
+  background-color: $background-color
+  color: $color
+
+@mixin notification($align)
+  align-self: $align
+
+.home
+  height: 100vh
+  display: flex
+  flex-direction: column
+
+  .header
+    font-size: 2em
+    font-weight: bolder
+    text-align: center
+    padding: 5px
+
+  .body
+    flex: 1
+    display: flex
+
+    .users
+      height: 100%
+      flex: 1
+      overflow: auto
+      border: 1px solid black
+
+      .user
+        color: white
+        background-color: black
+        text-align: center
+        padding: 5px
+        margin: 10px
+        border-radius: 10px
+
+    .chats
+      flex: 5
+      height: 100%
+      display: flex
+      flex-direction: column
+
+      .log
+        flex: 1
+        overflow: auto
+        padding: 30px
+        border: 1px solid black
+        display: flex
+        flex-direction: column
+
+        .admin
+          @include notification(center)
+
+        .own-messages
+          @include messages(flex-end, white, black)
+
+        .seen-status
+          @include notification(flex-end)
+
+        .others-messages
+          @include messages(flex-start, black, white)
+
+        .typing-status
+          @include notification(flex-start)
+
+      input
+        padding: 15px
+        margin: 20px 20px 50px
+        border: 1px solid black

@@ -1,0 +1,62 @@
+.home {
+  height: 100vh;
+  display: flex;
+  flex-direction: column; }
+  .home .header {
+    font-size: 2em;
+    font-weight: bolder;
+    text-align: center;
+    padding: 5px; }
+  .home .body {
+    flex: 1;
+    display: flex; }
+    .home .body .users {
+      height: 100%;
+      flex: 1;
+      overflow: auto;
+      border: 1px solid black; }
+      .home .body .users .user {
+        color: white;
+        background-color: black;
+        text-align: center;
+        padding: 5px;
+        margin: 10px;
+        border-radius: 10px; }
+    .home .body .chats {
+      flex: 5;
+      height: 100%;
+      display: flex;
+      flex-direction: column; }
+      .home .body .chats .log {
+        flex: 1;
+        overflow: auto;
+        padding: 30px;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column; }
+        .home .body .chats .log .admin {
+          align-self: center; }
+        .home .body .chats .log .own-messages {
+          border: 1px solid black;
+          border-radius: 10px;
+          padding: 10px;
+          margin: 10px 0px;
+          align-self: flex-end;
+          background-color: white;
+          color: black; }
+        .home .body .chats .log .seen-status {
+          align-self: flex-end; }
+        .home .body .chats .log .others-messages {
+          border: 1px solid black;
+          border-radius: 10px;
+          padding: 10px;
+          margin: 10px 0px;
+          align-self: flex-start;
+          background-color: black;
+          color: white; }
+        .home .body .chats .log .typing-status {
+          align-self: flex-start; }
+      .home .body .chats input {
+        padding: 15px;
+        margin: 20px 20px 50px;
+        border: 1px solid black; }
