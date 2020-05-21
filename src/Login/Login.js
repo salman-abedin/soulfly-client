@@ -8,7 +8,7 @@ const Login = () => {
    return (
       <div className="login">
          <div className="form">
-            <div className="greetings">Welcome</div>
+            <div className="greetings">Welcome Boy</div>
             <label>Username</label>
             <input className="login-input" type="text" onChange={(e) => setName(e.target.value)} />
             <Link
