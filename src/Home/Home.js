@@ -69,6 +69,11 @@ const Home = ({ location }) => {
             { class: 'admin', content: `${name} has left` },
          ]);
       });
+
+      return () => {
+         socket.emit('disconnect')
+      }
+
    }, []);
 
    return (
