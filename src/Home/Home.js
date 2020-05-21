@@ -7,24 +7,24 @@ import socketIOClient from 'socket.io-client';
 let socket;
 
 const Home = ({ location }) => {
+   const { name } = queryString.parse(location.search);
+   const [users, setUsers] = useState([]);
    const [messages, setMessages] = useState([]);
+   const [typing, setTyping] = useState(false);
    const [message, setMessage] = useState('');
    const [seen, setSeen] = useState(true);
    const [seenUsers, setSeenUsers] = useState([]);
-   const [users, setUsers] = useState([]);
-   const { name } = queryString.parse(location.search);
-   const [typing, setTyping] = useState(false);
 
    useEffect(() => {
-      // socket = socketIOClient('localhost:5000');
-      socket = socketIOClient('https://soulfly.herokuapp.com/');
+      socket = socketIOClient('localhost:5000');
+      // socket = socketIOClient('https://soulfly.herokuapp.com/');
 
       socket.emit('join', name);
 
-      socket.on('init', (usrList) => {
+      socket.on('init', (usrList, messages) => {
          setUsers((users) => usrList);
          setMessages((oldMessages) => [
-            ...oldMessages,
+            ...messages,
             { class: 'admin', content: `Welcome to the server ${name}` },
          ]);
       });
@@ -49,7 +49,7 @@ const Home = ({ location }) => {
 
       socket.on('typing', () => {
          setTyping(true);
-         setTimeout(() => setTyping(false), 1500)
+         setTimeout(() => setTyping(false), 1500);
       });
 
       socket.on('usrLeave', (users, name) => {
@@ -81,10 +81,6 @@ const Home = ({ location }) => {
 
             <div className="chats">
                <div className="log">
-                  {/* <div className="seen-status">seen by saadman</div> */}
-
-                  {/* <div className="typing-status">saadman is typing</div> */}
-
                   {messages.map((message, index) => {
                      if (message.class === 'admin') {
                         return (
@@ -94,7 +90,7 @@ const Home = ({ location }) => {
                         );
                      } else {
                         const classType =
-                           message.id === socket.id
+                           message.name === name
                               ? 'own-messages'
                               : 'others-messages';
                         return (
@@ -113,11 +109,8 @@ const Home = ({ location }) => {
                   )}
 
                   {typing && (
-                     <div className="typing-status">
-                        Someone is typing
-                     </div>
+                     <div className="typing-status">Someone is typing</div>
                   )}
-
                </div>
 
                <input

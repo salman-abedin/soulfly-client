@@ -10,7 +10,11 @@ const Login = () => {
          <div className="form">
             <div className="greetings">Welcome</div>
             <label>Username</label>
-            <input className="login-input" type="text" onChange={(e) => setName(e.target.value)} />
+            <input
+               className="login-input"
+               type="text"
+               onChange={(e) => setName(e.target.value)}
+            />
             <Link
                onClick={(e) => !name && e.preventDefault()}
                to={`/home?name=${name}`}

@@ -40,10 +40,9 @@
       display: flex;
       flex-direction: column; }
       .home .body .chats .log {
-        flex: 1;
+        height: 70vh;
         overflow: auto;
         padding: 30px;
-        border: 1px solid black;
         display: flex;
         flex-direction: column; }
         .home .body .chats .log .admin {
