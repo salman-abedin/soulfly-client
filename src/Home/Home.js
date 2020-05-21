@@ -13,8 +13,7 @@ const Home = ({ location }) => {
    const [seenUsers, setSeenUsers] = useState([]);
    const [users, setUsers] = useState([]);
    const { name } = queryString.parse(location.search);
-
-   const [typingUsers, setTypingUsers] = useState({});
+   const [typing, setTyping] = useState(false);
 
    useEffect(() => {
       // socket = socketIOClient('localhost:5000');
@@ -48,25 +47,10 @@ const Home = ({ location }) => {
          setSeenUsers((oldSeenUsers) => [...oldSeenUsers, name]);
       });
 
-      //TODO
-      socket.on('typing', ({id, name}) => {
-         setTypingUsers((oldTypingUsers) => {
-            oldTypingUsers[id] = name
-
-            // setTimeout(() => {
-            //    delete oldTypingUsers[id]
-            // }, 3000)
-
-            return oldTypingUsers
-         });
+      socket.on('typing', () => {
+         setTyping(true);
+         setTimeout(() => setTyping(false), 1500)
       });
-
-      // socket.on('typingStopped', ({id, name}) => {
-      //    setTypingUsers((oldTypingUsers) => {
-      //       delete oldTypingUsers[id]
-      //       return oldTypingUsers
-      //    });
-      // });
 
       socket.on('usrLeave', (users, name) => {
          setUsers((oldUsers) => users);
@@ -128,24 +112,21 @@ const Home = ({ location }) => {
                      </div>
                   )}
 
-                  {Object.values(typingUsers)[0] && (
+                  {typing && (
                      <div className="typing-status">
-                        Being typed by {Object.values(typingUsers).join(',')}
+                        Someone is typing
                      </div>
                   )}
+
                </div>
 
                <input
                   onChange={(e) => setMessage(e.target.value)}
-                  // onInput={(e) => socket.emit('typing', { id: socket.id, name: name })}
-                  // onKeyUp={(e) => socket.emit('typingStopped', { id: socket.id, name: name })}
-                  onFocus={(e) => !seen && socket.emit('seen', name) && setSeen(true) }
+                  onFocus={(e) =>
+                     !seen && socket.emit('seen', name) && setSeen(true)
+                  }
                   value={message}
                   onKeyDown={(e) => {
-
-                     //TODO
-                     socket.emit('typing', { id: socket.id, name: name })
-
                      if (e.key === 'Enter') {
                         e.preventDefault();
                         socket.emit('message', {
@@ -154,6 +135,8 @@ const Home = ({ location }) => {
                            content: message,
                         });
                         setMessage('');
+                     } else {
+                        socket.emit('typing', { id: socket.id, name: name });
                      }
                   }}
                />
