@@ -44,7 +44,8 @@
         overflow: auto;
         padding: 30px;
         display: flex;
-        flex-direction: column; }
+        flex-direction: column;
+        border: 1px solid black; }
         .home .body .chats .log .admin {
           align-self: center; }
         .home .body .chats .log .own-messages {
