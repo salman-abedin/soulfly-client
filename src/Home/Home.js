@@ -22,7 +22,7 @@ const Home = ({ location }) => {
       socket.emit('join', name);
 
       socket.on('init-users', (usrList, messages) => {
-         setUsers((users) => usrList);
+         setUsers(() => usrList);
 
          setMessages((oldMessages) => [
             ...oldMessages,
@@ -63,7 +63,7 @@ const Home = ({ location }) => {
       });
 
       socket.on('usrLeave', (users, name) => {
-         setUsers((oldUsers) => users);
+         setUsers(() => users);
          setMessages((oldMessages) => [
             ...oldMessages,
             { class: 'admin', content: `${name} has left` },
@@ -71,7 +71,7 @@ const Home = ({ location }) => {
       });
 
       return () => {
-         socket.emit('disconnect')
+         socket.disconnect()
       }
 
    }, []);
